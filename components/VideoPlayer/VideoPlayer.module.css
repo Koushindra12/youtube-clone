@@ -1,0 +1,872 @@
+.container {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1600px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Toast notification */
+.toast {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 9998;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.3s var(--ease-bounce);
+  white-space: nowrap;
+}
+.toast.success {
+  background: #166534;
+  color: #86efac;
+  border: 1px solid #15803d;
+}
+.toast.already {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-light);
+}
+
+/* Watch Time Banner */
+.watchBanner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+  font-size: 12.5px;
+  font-weight: 500;
+  margin-bottom: 10px;
+  animation: fadeIn 0.3s ease;
+}
+.watchBannerWarning {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+}
+.watchBannerUpgrade {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 99px;
+  background: rgba(245, 158, 11, 0.18);
+  color: #f59e0b;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.watchBannerUpgrade:hover {
+  background: rgba(245, 158, 11, 0.28);
+}
+
+/* Watch Limit Info (before watching) */
+.watchLimitInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+/* Time Limit Overlay */
+.timeLimitOverlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: var(--radius-md);
+  animation: fadeIn 0.3s ease;
+}
+.timeLimitContent {
+  text-align: center;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 320px;
+}
+.timeLimitLock {
+  color: #f59e0b;
+  animation: glow 2s ease-in-out infinite;
+}
+@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(245,158,11,0.5)); }
+  50% { filter: drop-shadow(0 0 14px rgba(245,158,11,0.9)); }
+}
+.timeLimitContent h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f1f1f1;
+}
+.timeLimitContent p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.timeLimitUpgradeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: opacity 0.15s, transform 0.15s var(--ease-bounce);
+  box-shadow: 0 4px 16px rgba(245, 158, 11, 0.35);
+}
+.timeLimitUpgradeBtn:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+.timeLimitResumeBtn {
+  padding: 8px 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.timeLimitResumeBtn:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ── MAIN ─────────────────────────────────────────────────── */
+.main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Player Wrapper ───────────────────────────────────────── */
+.playerWrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  cursor: pointer;
+}
+
+.player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ── Video Error Overlay ─────────────────────────────────── */
+.videoErrorOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(0,0,0,0.88);
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 24px;
+  pointer-events: none;
+  z-index: 5;
+}
+.videoErrorIcon {
+  font-size: 36px;
+}
+.videoErrorOverlay p {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.videoErrorOverlay span {
+  font-size: 13px;
+  color: var(--text-muted);
+  max-width: 260px;
+  line-height: 1.5;
+}
+.retryBtn {
+  margin-top: 4px;
+  padding: 8px 20px;
+  border-radius: 99px;
+  background: var(--yt-red);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.12s;
+  pointer-events: all;
+}
+.retryBtn:hover {
+  opacity: 0.85;
+  transform: scale(1.04);
+}
+
+
+/* ── Muted Nudge ─────────────────────────────────────────── */
+.mutedNudge {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(0,0,0,0.72);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  z-index: 25;
+  animation: fadeIn 0.3s ease;
+  white-space: nowrap;
+  pointer-events: all;
+  transition: background 0.15s;
+}
+.mutedNudge:hover {
+  background: rgba(0,0,0,0.88);
+}
+
+
+.gestureLayer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  /* Leave bottom 60px for controls */
+  bottom: 60px;
+  z-index: 10;
+}
+
+.gestureLeft,
+.gestureCenter,
+.gestureRight {
+  flex: 1;
+  height: 100%;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* Subtle hover tint so user knows zones exist on desktop */
+.gestureLeft:active,
+.gestureRight:active {
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, transparent 70%);
+}
+.gestureCenter:active {
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, transparent 70%);
+}
+
+/* ── Seek Feedback Overlay ────────────────────────────────── */
+.seekFeedback {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  pointer-events: none;
+  z-index: 20;
+  animation: seekFeedbackAnim 0.9s var(--ease-smooth) forwards;
+}
+
+.seekFeedbackLeft {
+  left: 18%;
+  transform: translate(-50%, -60%);
+}
+
+.seekFeedbackRight {
+  right: 18%;
+  transform: translate(50%, -60%);
+}
+
+.seekFeedback > svg {
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
+}
+
+@keyframes seekFeedbackAnim {
+  0%   { opacity: 0; transform: translate(var(--tx, -50%), -40%); }
+  20%  { opacity: 1; transform: translate(var(--tx, -50%), -60%); }
+  70%  { opacity: 1; transform: translate(var(--tx, -50%), -60%); }
+  100% { opacity: 0; transform: translate(var(--tx, -50%), -70%); }
+}
+
+.seekFeedbackLeft {
+  --tx: -50%;
+}
+.seekFeedbackRight {
+  --tx: 50%;
+}
+
+/* Ripple circle behind seek icon */
+.seekFeedback::before {
+  content: '';
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 0.9s ease forwards;
+  z-index: -1;
+}
+
+@keyframes rippleExpand {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.6; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+/* ── Center Feedback (Play / Pause / Next) ────────────────── */
+.centerFeedback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: white;
+  pointer-events: none;
+  z-index: 20;
+  animation: centerFeedbackAnim 0.8s var(--ease-smooth) forwards;
+}
+
+.centerFeedback > svg {
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.8));
+}
+
+.feedbackLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+  letter-spacing: 0.03em;
+}
+
+.centerFeedback::before {
+  content: '';
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.14);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: rippleExpand 0.8s ease forwards;
+  z-index: -1;
+}
+
+@keyframes centerFeedbackAnim {
+  0%   { opacity: 0; transform: translate(-50%, -60%) scale(0.6); }
+  20%  { opacity: 1; transform: translate(-50%, -60%) scale(1.05); }
+  65%  { opacity: 1; transform: translate(-50%, -60%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -60%) scale(0.85); }
+}
+
+/* ── Gesture Hints ────────────────────────────────────────── */
+.gestureHints {
+  position: absolute;
+  top: 12px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.hintsVisible {
+  opacity: 1;
+}
+.hintBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+  background: rgba(0,0,0,0.4);
+  border-radius: 99px;
+  padding: 2px 8px;
+  letter-spacing: 0.04em;
+}
+
+/* ── Custom Controls ─────────────────────────────────────── */
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.85) 80%);
+  padding: 32px 12px 10px;
+  z-index: 15;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+.controlsVisible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Progress bar */
+.progressWrapper {
+  position: relative;
+  height: 4px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.progressWrapper:hover {
+  height: 6px;
+}
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: var(--yt-red);
+  border-radius: 99px;
+  pointer-events: none;
+  transition: width 0.1s linear;
+}
+.seekBar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  margin: 0;
+  padding: 0;
+}
+/* Custom track/thumb */
+.progressWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.2);
+  border-radius: 99px;
+}
+
+/* Controls Row */
+.controlsRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px;
+}
+.controlsLeft {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.controlsRight {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.ctrlBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  color: white;
+  transition: background 0.15s, transform 0.12s var(--ease-bounce);
+  flex-shrink: 0;
+}
+.ctrlBtn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.1);
+}
+.ctrlBtn:active {
+  transform: scale(0.95);
+}
+.timeDisplay {
+  font-size: 12px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
+  padding: 0 6px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Video Info ───────────────────────────────────────────── */
+.videoInfo {
+  padding: 4px 0;
+}
+
+.categoryTag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-link);
+  background: rgba(62, 166, 255, 0.1);
+  padding: 2px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.4;
+  margin-bottom: 16px;
+}
+
+/* Action Row */
+.actionRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.channelInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.channelAvatar {
+  border-radius: var(--radius-full);
+  object-fit: cover;
+  flex-shrink: 0;
+  transition: transform var(--duration-fast);
+}
+.channelInfo:hover .channelAvatar {
+  transform: scale(1.05);
+}
+
+.channelMeta {
+  min-width: 0;
+}
+
+.channelNameRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.channelName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.verified {
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.subCount {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Subscribe Button */
+.subscribeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--duration-fast), color var(--duration-fast), transform var(--duration-fast) var(--ease-bounce);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.subscribeBtn:hover { transform: scale(1.02); }
+.subscribeBtn.subscribed {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-light);
+}
+
+/* Action Buttons */
+.actionBtns {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.likeGroup {
+  display: flex;
+  align-items: center;
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.likeBtn, .dislikeBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+.likeBtn:hover, .dislikeBtn:hover { background: var(--bg-hover); }
+.likeBtn.liked { color: var(--text-link); }
+.likeBtn.animating { animation: likeWiggle 0.5s var(--ease-bounce); }
+.dislikeBtn.disliked { color: var(--yt-red); }
+
+.separator {
+  width: 1px;
+  height: 24px;
+  background: var(--border-light);
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  transition: background var(--duration-fast), transform var(--duration-fast);
+}
+.actionBtn:hover {
+  background: var(--bg-hover);
+  transform: scale(1.02);
+}
+.actionBtn.downloaded {
+  color: #4ade80;
+  border-color: rgba(74, 222, 128, 0.3);
+  background: rgba(74, 222, 128, 0.08);
+}
+.actionBtn.locked {
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.08);
+}
+.actionBtn.locked:hover { background: rgba(245, 158, 11, 0.15); }
+
+.moreBtn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  transition: background var(--duration-fast);
+}
+.moreBtn:hover { background: var(--bg-hover); }
+
+/* Description */
+.description {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  margin-top: 12px;
+  cursor: default;
+  overflow: hidden;
+  transition: background var(--duration-fast);
+}
+.description:hover { background: var(--bg-hover); }
+
+.descStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+}
+
+.tag {
+  color: var(--text-link);
+  font-weight: 400;
+}
+
+.descText {
+  font-size: 14px;
+  color: var(--text-primary);
+  line-height: 1.7;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: none;
+}
+.expanded .descText {
+  -webkit-line-clamp: unset;
+  display: block;
+}
+
+.showMoreBtn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 10px;
+  padding: 4px 0;
+  transition: opacity var(--duration-fast);
+}
+.showMoreBtn:hover { opacity: 0.7; }
+
+/* ── Gesture Guide ────────────────────────────────────────── */
+.gestureGuide {
+  margin: 20px 0 4px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.gestureGuideTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 12px;
+}
+.gestureGuideGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.gestureItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.gestureItem > span:last-child {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.gestureBadge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: rgba(62, 166, 255, 0.12);
+  color: var(--text-link);
+  border: 1px solid rgba(62,166,255,0.2);
+  white-space: nowrap;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sidebar {
+  width: 402px;
+  flex-shrink: 0;
+}
+
+.relatedTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.relatedList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .sidebar { width: 340px; }
+}
+
+@media (max-width: 900px) {
+  .container {
+    flex-direction: column;
+    padding: 16px;
+  }
+  .sidebar { width: 100%; }
+  .relatedList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0; }
+  .playerWrapper { border-radius: 0; }
+  .videoInfo { padding: 12px; }
+  .title { font-size: 16px; }
+  .actionBtns { width: 100%; }
+  .sidebar { padding: 0 12px; }
+  .gestureGuideGrid { grid-template-columns: repeat(2, 1fr); }
+}

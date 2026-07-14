@@ -1,0 +1,216 @@
+.panel {
+  position: fixed;
+  top: var(--header-height, 56px);
+  right: 0;
+  width: 320px;
+  height: calc(100vh - var(--header-height, 56px));
+  background: linear-gradient(180deg, #13131f 0%, #0d0d1a 100%);
+  border-left: 1px solid rgba(255,255,255,0.07);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -8px 0 40px rgba(0,0,0,0.6);
+  animation: panelSlideIn 0.3s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+
+@keyframes panelSlideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.panelTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f1f1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.panelTitle svg {
+  color: #6366f1;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #aaa;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.closeBtn:hover {
+  background: rgba(255,255,255,0.14);
+  color: #f1f1f1;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  padding: 16px 20px 8px;
+}
+
+.list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 12px 12px;
+}
+
+.list::-webkit-scrollbar { width: 4px; }
+.list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+.friendItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 8px;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+  cursor: default;
+}
+
+.friendItem:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.onlineDot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2px solid #13131f;
+}
+
+.offlineDot {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4b5563;
+  border: 2px solid #13131f;
+}
+
+.friendInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.friendName {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f1f1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.friendStatus {
+  font-size: 12px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 2px;
+}
+
+.friendStatus.online {
+  color: #10b981;
+}
+
+.callBtn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  transition: background 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.2s ease;
+  flex-shrink: 0;
+}
+
+.callBtn:hover {
+  background: rgba(99, 102, 241, 0.3);
+  transform: scale(1.1);
+  box-shadow: 0 0 16px rgba(99, 102, 241, 0.4);
+}
+
+.callBtn:active {
+  transform: scale(0.95);
+}
+
+.callBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.footer {
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footerNote {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ─── Backdrop ─── */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: transparent;
+}
+
+@media (max-width: 480px) {
+  .panel {
+    width: 100vw;
+    border-left: none;
+  }
+}

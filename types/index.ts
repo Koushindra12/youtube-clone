@@ -41,6 +41,10 @@ export interface Comment {
   avatar: string;
   text: string;
   likes: string;
+  likeCount: number;
+  dislikes: number;
+  city: string;
+  language: string;
   postedAt: string;
   replies?: Comment[];
 }
