@@ -307,7 +307,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
         const screenStream = await navigator.mediaDevices.getDisplayMedia({
           video: {
             // Prefer browser tab for YouTube sharing
-            // @ts-expect-error — displaySurface is a valid constraint
+           
             displaySurface: 'browser',
           },
           audio: true,
