@@ -305,11 +305,10 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
     } else {
       try {
         const screenStream = await navigator.mediaDevices.getDisplayMedia({
-          video: {
-            // Prefer browser tab for YouTube sharing
-
+         video: {
+         // Prefer browser tab for YouTube sharing
             displaySurface: 'browser',
-          },
+        },
           audio: true,
         });
         screenStreamRef.current = screenStream;
