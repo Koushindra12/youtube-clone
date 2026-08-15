@@ -457,3 +457,39 @@
 :global([data-theme="light"]) .comment {
   border-bottom-color: rgba(0,0,0,0.06);
 }
+
+/* ── Mobile Responsive ───────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Reduce reply indent on small screens */
+  .reply {
+    margin-left: 24px;
+  }
+  /* Translator panel should not overflow */
+  .translatorPanel {
+    max-width: 100%;
+  }
+  /* Smaller avatar in comment input on very small screens */
+  .userAvatar {
+    width: 32px;
+    height: 32px;
+  }
+  /* Smaller comment avatars */
+  .avatar {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .reply {
+    margin-left: 16px;
+  }
+  /* Stack action buttons if needed */
+  .actions {
+    gap: 2px;
+  }
+  .actionBtn {
+    padding: 4px 6px;
+    font-size: 12px;
+  }
+}

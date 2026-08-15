@@ -305,3 +305,25 @@
     grid-template-columns: 1fr;
   }
 }
+
+@media (max-width: 480px) {
+  .page {
+    padding: 16px 12px;
+  }
+  .pageTitle { font-size: 20px; }
+  .pageHeader { gap: 10px; }
+  .headerLeft { gap: 12px; }
+  .pageIcon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    flex-shrink: 0;
+  }
+  .quotaCard { padding: 16px; }
+  /* Stack quota info on very small screens */
+  .quotaInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}

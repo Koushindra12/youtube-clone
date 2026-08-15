@@ -574,6 +574,7 @@
   gap: 12px;
   flex-wrap: wrap;
   margin-bottom: 12px;
+  row-gap: 10px;
 }
 
 .channelInfo {
@@ -652,6 +653,7 @@
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .likeGroup {
@@ -869,4 +871,67 @@
   .actionBtns { width: 100%; }
   .sidebar { padding: 0 12px; }
   .gestureGuideGrid { grid-template-columns: repeat(2, 1fr); }
+  /* Watch banner: allow text to wrap on small screens */
+  .watchBanner {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+  .watchLimitInfo {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+  /* Related videos: single column on mobile */
+  .relatedList {
+    grid-template-columns: 1fr;
+  }
+  /* Tighter padding */
+  .gestureGuide {
+    margin: 12px 0 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .videoInfo { padding: 10px; }
+  .title { font-size: 15px; }
+  .actionRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .channelInfo { width: 100%; }
+  .actionBtns {
+    width: 100%;
+    gap: 6px;
+  }
+  /* Smaller action buttons on tiny screens */
+  .likeBtn, .dislikeBtn {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+  .actionBtn {
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+  .subscribeBtn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .videoInfo { padding: 8px; }
+  .title { font-size: 14px; }
+  .likeBtn, .dislikeBtn {
+    padding: 6px 10px;
+    font-size: 12px;
+    gap: 5px;
+  }
+  .actionBtn {
+    padding: 6px 10px;
+    font-size: 12px;
+    gap: 5px;
+  }
+  .timeDisplay {
+    font-size: 10px;
+  }
 }

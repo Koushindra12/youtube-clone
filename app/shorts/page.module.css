@@ -191,10 +191,51 @@
   height: 20px;
 }
 
+/* Tablet: constrain video area width */
+@media (min-width: 641px) and (max-width: 900px) {
+  .videoArea {
+    width: 340px;
+    height: 604px;
+  }
+}
+
 @media (max-width: 640px) {
   .page { padding: 0; align-items: flex-start; }
-  .container { flex-direction: column; align-items: center; }
-  .videoArea { width: 100vw; height: calc(100vh - var(--header-height)); border-radius: 0; }
-  .navArrows { flex-direction: row; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10; }
+  .container {
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+  .videoArea {
+    width: 100vw;
+    height: calc(100vh - var(--header-height));
+    border-radius: 0;
+  }
+  /* Position action buttons over the video on the right */
+  .shortCard {
+    position: relative;
+    width: 100%;
+  }
+  .actions {
+    position: absolute;
+    right: 12px;
+    bottom: 100px;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 0;
+    z-index: 10;
+  }
+  .actionBtn {
+    color: white;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+  }
+  .navArrows {
+    flex-direction: row;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
   .dots { display: none; }
 }

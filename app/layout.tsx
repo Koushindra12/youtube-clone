@@ -14,7 +14,8 @@ import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [sidebarMini, setSidebarMini] = useState(false);
+  // Start mini=true so the mini sidebar is visible by default on desktop
+  const [sidebarMini, setSidebarMini] = useState(true);
 
   const toggleMenu = () => {
     if (window.innerWidth <= 768) {

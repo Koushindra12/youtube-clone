@@ -59,10 +59,12 @@ export default function Sidebar({ isOpen, isMini }: SidebarProps) {
 
   return (
     <>
-      {isOpen && !isMini && (
+      {/* Overlay: shown on mobile when sidebar is open */}
+      {isOpen && (
         <div className={styles.overlay} />
       )}
-      <nav className={`${styles.sidebar} ${isMini ? styles.mini : ''} ${isOpen ? styles.open : ''}`}>
+      {/* Apply mini class only when mini AND not in open/overlay mode */}
+      <nav className={`${styles.sidebar} ${isMini && !isOpen ? styles.mini : ''} ${isOpen ? styles.open : ''}`}>
         <div className={styles.content}>
           {/* Main Navigation */}
           <section className={styles.section}>
@@ -73,12 +75,12 @@ export default function Sidebar({ isOpen, isMini }: SidebarProps) {
                 className={`${styles.link} ${pathname === href && label === 'Home' ? styles.active : ''}`}
               >
                 <Icon size={20} className={styles.linkIcon} />
-                {!isMini && <span className={styles.linkLabel}>{label}</span>}
+                {(!isMini || isOpen) && <span className={styles.linkLabel}>{label}</span>}
               </Link>
             ))}
           </section>
 
-          {!isMini && (
+          {(!isMini || isOpen) && (
             <>
               <div className={styles.divider} />
 

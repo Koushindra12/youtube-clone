@@ -205,6 +205,32 @@
 @media (max-width: 600px) {
   .banner { height: 120px; }
   .name { font-size: 22px; }
-  .headerInner { padding: 16px; }
+  .headerInner { padding: 16px; gap: 14px; }
   .content { padding: 16px; }
+  /* Actions: allow wrapping so subscribe + link fit */
+  .actions { flex-wrap: wrap; }
+  .tabs { padding: 0 12px; }
+}
+
+@media (max-width: 480px) {
+  .banner { height: 100px; }
+  .name { font-size: 20px; }
+  .headerInner {
+    padding: 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .avatar {
+    width: 64px;
+    height: 64px;
+  }
+  /* Info takes remaining width */
+  .info { min-width: 0; }
+  /* Actions go below info row */
+  .actions { width: 100%; }
+  .subscribeBtn { flex: 1; justify-content: center; }
+  .meta { font-size: 12px; }
+  .desc { font-size: 13px; }
+  .content { padding: 12px; }
 }

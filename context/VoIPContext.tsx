@@ -21,10 +21,10 @@ export interface Friend {
 }
 
 export const MOCK_FRIENDS: Friend[] = [
-  { id: 'f1', name: 'Alex Rivera',   avatar: 'AR', avatarColor: '#6366f1', online: true  },
-  { id: 'f2', name: 'Priya Sharma',  avatar: 'PS', avatarColor: '#ec4899', online: true  },
-  { id: 'f3', name: 'Marcus Chen',   avatar: 'MC', avatarColor: '#10b981', online: false },
-  { id: 'f4', name: 'Sofia Torres',  avatar: 'ST', avatarColor: '#f59e0b', online: true  },
+  { id: 'f1', name: 'Alex Rivera', avatar: 'AR', avatarColor: '#6366f1', online: true },
+  { id: 'f2', name: 'Priya Sharma', avatar: 'PS', avatarColor: '#ec4899', online: true },
+  { id: 'f3', name: 'Marcus Chen', avatar: 'MC', avatarColor: '#10b981', online: false },
+  { id: 'f4', name: 'Sofia Torres', avatar: 'ST', avatarColor: '#f59e0b', online: true },
   { id: 'f5', name: 'Kai Nakamura', avatar: 'KN', avatarColor: '#3b82f6', online: false },
 ];
 
@@ -59,24 +59,24 @@ const CHANNEL_NAME = 'yt-clone-voip-signaling';
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export function VoIPProvider({ children }: { children: React.ReactNode }) {
-  const [callStatus, setCallStatus]         = useState<CallStatus>('idle');
-  const [localStream, setLocalStream]       = useState<MediaStream | null>(null);
-  const [remoteStream, setRemoteStream]     = useState<MediaStream | null>(null);
-  const [isMuted, setIsMuted]               = useState(false);
-  const [isCameraOff, setIsCameraOff]       = useState(false);
+  const [callStatus, setCallStatus] = useState<CallStatus>('idle');
+  const [localStream, setLocalStream] = useState<MediaStream | null>(null);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
+  const [isMuted, setIsMuted] = useState(false);
+  const [isCameraOff, setIsCameraOff] = useState(false);
   const [isSharingScreen, setIsSharingScreen] = useState(false);
-  const [isRecording, setIsRecording]       = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
-  const [callerFriend, setCallerFriend]     = useState<Friend | null>(null);
+  const [callerFriend, setCallerFriend] = useState<Friend | null>(null);
   const [showFriendList, setShowFriendList] = useState(false);
 
-  const peerRef         = useRef<RTCPeerConnection | null>(null);
-  const channelRef      = useRef<BroadcastChannel | null>(null);
-  const localStreamRef  = useRef<MediaStream | null>(null);
+  const peerRef = useRef<RTCPeerConnection | null>(null);
+  const channelRef = useRef<BroadcastChannel | null>(null);
+  const localStreamRef = useRef<MediaStream | null>(null);
   const screenStreamRef = useRef<MediaStream | null>(null);
-  const recorderRef     = useRef<MediaRecorder | null>(null);
-  const recChunksRef    = useRef<Blob[]>([]);
-  const recTimerRef     = useRef<ReturnType<typeof setInterval> | null>(null);
+  const recorderRef = useRef<MediaRecorder | null>(null);
+  const recChunksRef = useRef<Blob[]>([]);
+  const recTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // ── BroadcastChannel setup ─────────────────────────────────────────────────
 
@@ -122,7 +122,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
     return () => {
       bc.close();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── RTCPeerConnection factory ──────────────────────────────────────────────
@@ -215,7 +215,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
   const declineCall = useCallback(() => {
     channelRef.current?.postMessage({ type: 'call-declined', data: null });
     cleanupCall();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── End call ──────────────────────────────────────────────────────────────
@@ -223,7 +223,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
   const endCall = useCallback(() => {
     channelRef.current?.postMessage({ type: 'call-ended', data: null });
     cleanupCall();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── Cleanup ───────────────────────────────────────────────────────────────
@@ -240,7 +240,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
     screenStreamRef.current?.getTracks().forEach((t) => t.stop());
 
     peerRef.current?.close();
-    peerRef.current        = null;
+    peerRef.current = null;
     localStreamRef.current = null;
     screenStreamRef.current = null;
 
@@ -274,7 +274,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
     setIsMuted((v) => !v);
   }, []);
 
-  // ── Toggle camera ─────────────────────────────────────────────────────────
+  // ── Toggle camera 
 
   const toggleCamera = useCallback(() => {
     const stream = localStreamRef.current;
@@ -285,7 +285,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
     setIsCameraOff((v) => !v);
   }, []);
 
-  // ── Toggle screen share ───────────────────────────────────────────────────
+  // ── Toggle screen share
 
   const toggleScreenShare = useCallback(async () => {
     const pc = peerRef.current;
@@ -307,7 +307,7 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
         const screenStream = await navigator.mediaDevices.getDisplayMedia({
           video: {
             // Prefer browser tab for YouTube sharing
-           
+
             displaySurface: 'browser',
           },
           audio: true,
@@ -363,9 +363,9 @@ export function VoIPProvider({ children }: { children: React.ReactNode }) {
 
       recorder.onstop = () => {
         const blob = new Blob(recChunksRef.current, { type: mimeType });
-        const url  = URL.createObjectURL(blob);
-        const a    = document.createElement('a');
-        a.href     = url;
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
         a.download = `call-recording-${new Date().toISOString().replace(/[:.]/g, '-')}.webm`;
         a.click();
         URL.revokeObjectURL(url);

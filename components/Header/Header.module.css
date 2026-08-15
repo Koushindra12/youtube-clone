@@ -28,6 +28,8 @@
 .hidden {
   opacity: 0;
   pointer-events: none;
+  /* Ensure hidden elements don't cause layout issues */
+  visibility: hidden;
 }
 
 .menuBtn {
@@ -334,6 +336,25 @@
   border-radius: 999px;
 }
 
+/* Tablet: search bar visible, hide the mobile search icon, hide mic */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .right .iconBtn:first-child {
+    display: none;
+  }
+  .center {
+    max-width: 500px;
+  }
+  /* Hide mic on tablets to save space */
+  .micBtn {
+    display: none;
+  }
+  /* Reduce icon gaps on tablet */
+  .right {
+    gap: 2px;
+  }
+}
+
+/* Mobile: show the search icon, hide the search bar (shown via mobileActive) */
 @media (max-width: 640px) {
   .right .iconBtn:first-child {
     display: flex;
@@ -347,5 +368,18 @@
   }
   .micBtn {
     display: none;
+  }
+  /* On very small screens, tighten right side gaps */
+  .right {
+    gap: 0;
+  }
+  /* Slightly smaller icon buttons on tiny screens */
+  .iconBtn {
+    width: 36px;
+    height: 36px;
+  }
+  .avatarBtn {
+    width: 30px;
+    height: 30px;
   }
 }

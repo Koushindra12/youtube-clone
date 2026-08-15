@@ -159,3 +159,32 @@
   color: var(--text-muted);
   font-size: 14px;
 }
+
+@media (max-width: 600px) {
+  .content {
+    padding: 16px 12px 32px;
+  }
+  .filterBar {
+    padding: 10px 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stack channel card vertically on small screens */
+  .channelCard {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .chAvatar {
+    width: 60px;
+    height: 60px;
+  }
+  .chName {
+    font-size: 16px;
+  }
+  /* Tighten video list spacing */
+  .videoList {
+    gap: 12px;
+  }
+}

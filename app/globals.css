@@ -230,6 +230,18 @@ img {
 /* =====================
    RESPONSIVE
    ===================== */
+
+/* Prevent horizontal overflow globally */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Ensure main layout doesn't cause horizontal overflow */
+.main-layout {
+  overflow-x: hidden;
+}
+
 @media (max-width: 1024px) {
   .page-content {
     margin-left: var(--sidebar-mini-width);

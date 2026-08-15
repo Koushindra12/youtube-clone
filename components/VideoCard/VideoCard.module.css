@@ -192,3 +192,25 @@
 .compact .stats {
   font-size: 12px;
 }
+
+/* Responsive: shrink horizontal/compact cards on small screens */
+@media (max-width: 480px) {
+  .horizontal .thumbnailWrapper {
+    width: 130px;
+  }
+  .compact .thumbnailWrapper {
+    width: 100px;
+  }
+}
+
+@media (max-width: 360px) {
+  .horizontal .thumbnailWrapper {
+    width: 110px;
+  }
+  .compact .thumbnailWrapper {
+    width: 90px;
+  }
+  .horizontal .title {
+    font-size: 13px;
+  }
+}
